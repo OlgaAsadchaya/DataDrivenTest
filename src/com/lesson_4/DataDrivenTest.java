@@ -1,26 +1,22 @@
 package com.lesson_4;
 
+import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-
-import org.junit.*;
-
-import static org.junit.Assert.*;
-
 import org.junit.Before;
 import org.junit.After;
-
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized.Parameters;
 import org.junit.runners.Parameterized;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
+import java.time.Duration;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.concurrent.TimeUnit;
+import static org.junit.Assert.assertEquals;
 
 
 @RunWith(value = Parameterized.class)
@@ -61,7 +57,6 @@ public class DataDrivenTest {
 
     @Test
     public void login() {
-
         tutBy.findElement(By.cssSelector("a[data-target-popup='authorize-form']")).click();
         tutBy.findElement(By.name("login")).sendKeys(emailAddress);
         tutBy.findElement(By.name("password")).sendKeys(password);
@@ -71,6 +66,7 @@ public class DataDrivenTest {
 
         // Explicit Wait
         WebDriverWait explicitWait = new WebDriverWait(tutBy, 10);
+        explicitWait.pollingEvery(Duration.ofSeconds(2));
         explicitWait.until(ExpectedConditions.visibilityOf(content));
         assertEquals(content.getText(), this.userName);
     }
